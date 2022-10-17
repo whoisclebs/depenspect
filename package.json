@@ -11,7 +11,7 @@
     "test:coverage": "npm test -- --coverage",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "prepare": "husky install",
+    "prepare": "husky install && chmod ug+x .husky/*",
     "commit:lint": "commitlint --edit"
   },
   "author": "",
