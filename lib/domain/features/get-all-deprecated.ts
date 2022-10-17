@@ -5,13 +5,15 @@ export async function getAllDeprecated (packageName: string): Promise<any> {
   }
   const url = `https://registry.npmjs.org/${packageName}`
   return axios.get(url).then(
-    async (json: AxiosResponse) => {
-      const versions = Object.keys(json.data.versions)
-      const deprecatedVersions = versions.filter((version: string) => json.data.versions[version].deprecated)
+    async (res: AxiosResponse) => {
+      if (res.status === 404) return Promise.reject(new Error('package not found'))
+      if (!res.data.versions) return Promise.reject(new Error('No versions found'))
+      const versions = Object.keys(res.data.versions)
+      const deprecatedVersions = versions.filter((version: string) => res.data.versions[version].deprecated)
       const deprecatedVersionsWithInfo = deprecatedVersions.map(async (version: string) => {
         return Promise.resolve({
           version,
-          info: json.data.versions[version].deprecated
+          info: res.data.versions[version].deprecated
         })
       })
       return deprecatedVersionsWithInfo
