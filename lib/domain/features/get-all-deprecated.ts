@@ -11,12 +11,12 @@ export async function getAllDeprecated (packageName: string): Promise<any> {
       const versions = Object.keys(res.data.versions)
       const deprecatedVersions = versions.filter((version: string) => res.data.versions[version].deprecated)
       const deprecatedVersionsWithInfo = deprecatedVersions.map(async (version: string) => {
-        return Promise.resolve({
+        return {
           version,
           info: res.data.versions[version].deprecated
-        })
+        }
       })
-      return deprecatedVersionsWithInfo
+      return Promise.resolve(deprecatedVersionsWithInfo)
     }
   ).catch(async (err: any) => {
     return Promise.reject(new Error(err))
