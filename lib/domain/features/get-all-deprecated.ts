@@ -16,7 +16,7 @@ export async function getAllDeprecated (packageName: string): Promise<any> {
           info: res.data.versions[version].deprecated
         }
       })
-      return Promise.resolve(deprecatedVersionsWithInfo)
+      return Promise.all(deprecatedVersionsWithInfo)
     }
   ).catch(async (err: any) => {
     return Promise.reject(new Error(err))
