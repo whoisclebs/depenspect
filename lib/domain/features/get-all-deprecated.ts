@@ -8,11 +8,11 @@ export async function getAllDeprecated (packageName: string): Promise<any> {
     async (json: AxiosResponse) => {
       const versions = Object.keys(json.data.versions)
       const deprecatedVersions = versions.filter((version: string) => json.data.versions[version].deprecated)
-      const deprecatedVersionsWithInfo = deprecatedVersions.map((version: string) => {
-        return {
+      const deprecatedVersionsWithInfo = deprecatedVersions.map(async (version: string) => {
+        return Promise.resolve({
           version,
           info: json.data.versions[version].deprecated
-        }
+        })
       })
       return deprecatedVersionsWithInfo
     }
