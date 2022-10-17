@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
-    "target": "ES2022",
+    "rootDir": "lib",
+    "target": "es2019",
     "module": "CommonJS",
+    "esModuleInterop": true,
     "sourceMap": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "baseUrl": "src",
+    "baseUrl": "lib",
     "paths": {
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },
   },
-  "include": ["src"],
+  "include": ["lib"],
 }

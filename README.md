@@ -1,8 +1,8 @@
 <div align="center">
-    <img width="33%" src="https://user-images.githubusercontent.com/43012757/193681602-3614a57b-9afe-4896-9249-872278987439.png">
+    <img width="44%" src="https://user-images.githubusercontent.com/43012757/196065833-8610069c-53a9-4f33-a40b-82b5f5bfd012.png">
 </div>
 
-> A simple typescript template
+> A simple dependencies inspect 
 
 ## Features
 * Open-source
@@ -13,7 +13,7 @@
 ## Usage
 Fork this repository
 ```bash
-   https://github.com/clebsonf/typescript-template/fork
+   https://github.com/clebsonf/depenspect/fork
 ```
 ## License
 Copyright (C) 2022 Clebson Augusto clebson.augusto@dcx.ufpb.br
