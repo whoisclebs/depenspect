@@ -14,7 +14,12 @@
 * typescript module resolution
 
 ## Usage
-Fork this repository
+npm
+```bash
+npm install depenspect
+```
+
+Or Fork this repository
 ```bash
    https://github.com/clebsonf/depenspect/fork
 ```
