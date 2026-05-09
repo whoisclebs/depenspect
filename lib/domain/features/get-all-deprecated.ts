@@ -1,24 +1,41 @@
-import axios, { AxiosResponse } from 'axios'
-export async function getAllDeprecated (packageName: string): Promise<any> {
-  if (packageName === undefined) {
-    return Promise.reject(new Error('package_name is required'))
+interface NpmPackageMetadata {
+  versions?: Record<string, {
+    deprecated?: string
+  }>
+}
+
+export interface DeprecatedVersion {
+  version: string
+  info: string
+}
+
+export async function getAllDeprecated (packageName: string): Promise<DeprecatedVersion[]> {
+  if (packageName === undefined || packageName.trim() === '') {
+    throw new Error('package_name is required')
   }
-  const url = `https://registry.npmjs.org/${packageName}`
-  return axios.get(url).then(
-    async (res: AxiosResponse) => {
-      if (res.status === 404) return Promise.reject(new Error('package not found'))
-      if (!res.data.versions) return Promise.reject(new Error('No versions found'))
-      const versions = Object.keys(res.data.versions)
-      const deprecatedVersions = versions.filter((version: string) => res.data.versions[version].deprecated)
-      const deprecatedVersionsWithInfo = deprecatedVersions.map(async (version: string) => {
-        return {
-          version,
-          info: res.data.versions[version].deprecated
-        }
-      })
-      return Promise.all(deprecatedVersionsWithInfo)
-    }
-  ).catch(async (err: any) => {
-    return Promise.reject(new Error(err))
-  })
+
+  const registryPackagePath = encodeURIComponent(packageName).replace(/^%40/, '@')
+  const url = `https://registry.npmjs.org/${registryPackagePath}`
+  const response = await fetch(url)
+
+  if (response.status === 404) {
+    throw new Error('package not found')
+  }
+
+  if (!response.ok) {
+    throw new Error(`registry request failed with status ${response.status}`)
+  }
+
+  const data = await response.json() as NpmPackageMetadata
+
+  if (data.versions === undefined) {
+    throw new Error('No versions found')
+  }
+
+  return Object.entries(data.versions)
+    .filter(([, metadata]) => metadata.deprecated !== undefined)
+    .map(([version, metadata]) => ({
+      version,
+      info: metadata.deprecated as string
+    }))
 }

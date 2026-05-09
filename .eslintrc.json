@@ -1,6 +1,18 @@
 {
-    "extends": "standard-with-typescript",
+    "env": {
+      "node": true,
+      "jest": true,
+      "es2022": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "parserOptions": {
+      "ecmaVersion": 2022,
+      "sourceType": "module",
       "project": "./tsconfig.json"
     },
     "rules": {
@@ -10,7 +22,6 @@
       "@typescript-eslint/return-await": "off",
       "@typescript-eslint/restrict-template-expressions": "off",
       "@typescript-eslint/no-misused-promises": "off",
-      "@typescript-eslint/no-namespace": "off",
-      "import/export": "off"
+      "@typescript-eslint/no-namespace": "off"
     }
   }

@@ -9,11 +9,12 @@
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "types": ["node", "jest"],
     "baseUrl": "lib",
     "paths": {
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },
   },
-  "include": ["lib"],
+  "include": ["lib", "tests"],
 }

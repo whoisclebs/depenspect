@@ -1,29 +1,80 @@
-<div align="center">
-    <img width="33%" src="https://user-images.githubusercontent.com/43012757/196065833-8610069c-53a9-4f33-a40b-82b5f5bfd012.png">
-</div>
+# Depenspect
 
-[![Node.js Package](https://github.com/clebsonf/depenspect/actions/workflows/npm-publish.yml/badge.svg?branch=0.0.3)](https://github.com/clebsonf/depenspect/actions/workflows/npm-publish.yml)
+[![Node.js Package](https://github.com/whoisclebs/depenspect/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/whoisclebs/depenspect/actions/workflows/npm-publish.yml)
 [![npm](https://img.shields.io/npm/v/depenspect)](https://www.npmjs.com/package/depenspect)
-[![NPM](https://img.shields.io/npm/l/depenspect)](https://github.com/clebsonf/depenspect/blob/main/LICENSE)
-> A simple dependencies inspect 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Features
-* Open-source
-* tsconfig preconfigured
-* husky with commitlint, lintstage and jest
-* typescript module resolution
+Depenspect inspects npm package metadata and returns the versions that were marked as deprecated in the npm registry.
 
-## Usage
-npm
+## Table of Contents
+
+- [About The Project](#about-the-project)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Development](#development)
+- [Publishing](#publishing)
+- [License](#license)
+
+## About The Project
+
+Use Depenspect when you need to check whether older versions of a package have deprecation notices. It supports regular and scoped npm package names.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18 or newer
+- npm
+
+### Installation
+
 ```bash
 npm install depenspect
 ```
 
-Or Fork this repository
-```bash
-   https://github.com/clebsonf/depenspect/fork
-```
-## License
-Copyright (C) 2022 Clebson Augusto clebson.augusto@dcx.ufpb.br
+GitHub Packages is also supported under the scoped package name:
 
-You can see the license [here](https://github.com/clebsonf/depenspect/blob/main/LICENSE)
+```bash
+npm install @whoisclebs/depenspect --registry=https://npm.pkg.github.com
+```
+
+## Usage
+
+```ts
+import { getAllDeprecated } from 'depenspect'
+
+const deprecatedVersions = await getAllDeprecated('left-pad')
+
+console.log(deprecatedVersions)
+// [{ version: '1.1.0', info: 'use 2.0.0' }]
+```
+
+Registry lookup helpers are also exported:
+
+```ts
+import { getRegisterUrl } from 'depenspect'
+
+const registryUrl = getRegisterUrl('@my-scope')
+```
+
+## Development
+
+```bash
+npm ci
+npm test
+npm run lint
+npm run build
+```
+
+The package is built with `tsup` and emits CommonJS output plus TypeScript declarations in `dist/`.
+
+## Publishing
+
+Publishing runs from GitHub releases. The workflow publishes:
+
+- `depenspect` to npm with `NPM_TOKEN`
+- `@whoisclebs/depenspect` to GitHub Packages with `GITHUB_TOKEN`
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
